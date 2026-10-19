@@ -68,10 +68,14 @@ function nameStages(events) {
 function buildBlock(events) {
   const stage = nameStages(events);
   const teams = {};
+  const logos = {};
   const rows = events.map((e) => {
     const [h, a] = e.match.teams;
     const code = (x) => (x.code === "TBD" ? null : x.code);
-    for (const x of [h, a]) if (code(x)) teams[x.code] = x.name;
+    for (const x of [h, a]) if (code(x)) {
+      teams[x.code] = x.name;
+      logos[x.code] = x.image.replace(/^http:/, "https:");
+    }
     const row = [e.startTime.slice(0, 16) + "Z", PHASE[e.blockName] ?? "淘汰賽", stage.get(e.match.id), e.match.strategy.count];
     if (code(h) && code(a)) {
       row.push(h.code, a.code);
@@ -79,10 +83,11 @@ function buildBlock(events) {
     }
     return "  " + JSON.stringify(row);
   });
-  const sorted = Object.fromEntries(Object.entries(teams).sort(([x], [y]) => x.localeCompare(y)));
+  const bySlug = (o) => Object.fromEntries(Object.entries(o).sort(([x], [y]) => x.localeCompare(y)));
   return (updated) => `// BEGIN GENERATED (scripts/update-schedule.mjs)
 const UPDATED=${JSON.stringify(updated)};
-const TEAMS=${JSON.stringify(sorted)};
+const TEAMS=${JSON.stringify(bySlug(teams))};
+const LOGOS=${JSON.stringify(bySlug(logos))};
 const RAW=[
 ${rows.join(",\n")}
 ];
