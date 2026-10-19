@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026 英雄聯盟世界賽賽程</title>
+<style>
+:root{--bg:#0b1020;--card:#141b30;--line:#26304d;--tx:#e8ecf8;--mut:#8b96b8;--acc:#c8aa6e;--win:#4ade80;--live:#f87171}
+@media (prefers-color-scheme:light){:root{--bg:#f4f5fa;--card:#fff;--line:#dfe3ef;--tx:#151a2c;--mut:#667090;--acc:#8a6a1f;--win:#15803d;--live:#dc2626}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"PingFang TC","Noto Sans TC",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 64px}
+h1{margin:0;font-size:26px}
+h1 span{color:var(--acc)}
+.sub{color:var(--mut);margin:4px 0 20px}
+.next{background:var(--card);border:1px solid var(--acc);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.next b{font-size:17px}
+.cd{font-variant-numeric:tabular-nums;font-size:22px;color:var(--acc);font-weight:700}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.bar button,.bar select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:inherit;cursor:pointer}
+.bar button[aria-pressed=true]{background:var(--acc);color:#111;border-color:var(--acc)}
+.bar select{margin-left:auto;border-radius:8px}
+h2{font-size:15px;color:var(--mut);margin:24px 0 8px;font-weight:600}
+.m{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px}
+.t{font-variant-numeric:tabular-nums;font-weight:700}
+.st{font-size:12px;color:var(--mut)}
+.vs{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tm{font-weight:700;min-width:48px}
+.tm.w{color:var(--win)}
+.tbd{color:var(--mut);font-weight:400}
+.sc{font-variant-numeric:tabular-nums;font-weight:700;padding:0 6px}
+.tag{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:1px 8px;color:var(--mut);white-space:nowrap}
+.tag.fin{color:var(--win);border-color:var(--win)}
+.tag.live{color:var(--live);border-color:var(--live)}
+@media (max-width:520px){.m{grid-template-columns:56px 1fr}.m .tag{grid-column:2}}
+footer{margin-top:32px;color:var(--mut);font-size:13px}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<h1>2026 <span>英雄聯盟世界賽</span>賽程</h1>
+<p class="sub">入圍賽已完賽，正賽即將開打。所有時間可按右上時區切換，預設香港時間。</p>
+<div class="next" id="next"></div>
+<div class="bar" id="bar"></div>
+<div id="list"></div>
+<footer>資料來源：LoL Esports 官方賽程介面，由 <code>scripts/update-schedule.mjs</code> 更新。<span id="upd"></span>淘汰賽對手待前一輪結果決定。入圍賽與瑞士輪嘅場次名稱由腳本按次序推斷，非官方公告。</footer>
+</main>
+<script>
+// BEGIN GENERATED (scripts/update-schedule.mjs)
+const UPDATED="2026-10-19T10:01Z";
+const TEAMS={"AL":"Anyone's Legend","BLG":"BILIBILI GAMING","C9":"Cloud9 Kia","CFO":"CTBC Flying Oyster","DK":"Dplus KIA","FUR":"FURIA","G2":"G2 Esports","GEN":"Gen.G Esports","HLE":"Hanwha Life Esports","IG":"Invictus Gaming","KC":"Karmine Corp","LOS":"LOS","LYON":"LYON","MKOI":"Movistar KOI","MVK":"MVK Esports","T1":"T1","TES":"TOP ESPORTS","TLAW":"Team Liquid Alienware","TSW":"Team Secret Whales"};
+const RAW=[
+  ["2026-10-15T18:00Z","入圍賽","勝部準決賽",5,"KC","C9",3,2],
+  ["2026-10-15T23:00Z","入圍賽","勝部準決賽",5,"MVK","FUR",3,0],
+  ["2026-10-16T18:00Z","入圍賽","勝部決賽",5,"KC","MVK",3,0],
+  ["2026-10-16T23:00Z","入圍賽","敗部準決賽",5,"FUR","C9",3,1],
+  ["2026-10-17T18:00Z","入圍賽","敗部決賽",5,"MVK","FUR",3,1],
+  ["2026-10-18T18:00Z","入圍賽","入圍賽總決賽",5,"KC","MVK",3,0],
+  ["2026-10-23T17:00Z","瑞士輪","第 1 輪",1,"GEN","IG"],
+  ["2026-10-23T18:00Z","瑞士輪","第 1 輪",1,"TLAW","CFO"],
+  ["2026-10-23T19:00Z","瑞士輪","第 1 輪",1,"AL","KC"],
+  ["2026-10-23T20:00Z","瑞士輪","第 1 輪",1,"G2","DK"],
+  ["2026-10-23T21:00Z","瑞士輪","第 1 輪",1,"HLE","TES"],
+  ["2026-10-23T22:00Z","瑞士輪","第 1 輪",1,"LOS","T1"],
+  ["2026-10-23T23:00Z","瑞士輪","第 1 輪",1,"TSW","LYON"],
+  ["2026-10-24T00:00Z","瑞士輪","第 1 輪",1,"BLG","MKOI"],
+  ["2026-10-24T17:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-24T18:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-24T19:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-24T20:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-24T21:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-24T22:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-24T23:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-25T00:00Z","瑞士輪","第 2 輪",1],
+  ["2026-10-25T17:00Z","瑞士輪","第 3 輪",1],
+  ["2026-10-25T18:00Z","瑞士輪","第 3 輪",1],
+  ["2026-10-25T19:00Z","瑞士輪","第 3 輪",3],
+  ["2026-10-25T22:00Z","瑞士輪","第 3 輪",3],
+  ["2026-10-26T17:00Z","瑞士輪","第 3 輪",1],
+  ["2026-10-26T18:00Z","瑞士輪","第 3 輪",1],
+  ["2026-10-26T19:00Z","瑞士輪","第 3 輪",3],
+  ["2026-10-26T22:00Z","瑞士輪","第 3 輪",3],
+  ["2026-10-28T20:00Z","瑞士輪","第 4 輪",3],
+  ["2026-10-28T23:00Z","瑞士輪","第 4 輪",3],
+  ["2026-10-29T20:00Z","瑞士輪","第 4 輪",3],
+  ["2026-10-29T23:00Z","瑞士輪","第 4 輪",3],
+  ["2026-10-30T20:00Z","瑞士輪","第 4 輪",3],
+  ["2026-10-30T23:00Z","瑞士輪","第 4 輪",3],
+  ["2026-10-31T17:00Z","瑞士輪","第 5 輪",3],
+  ["2026-10-31T20:00Z","瑞士輪","第 5 輪",3],
+  ["2026-10-31T23:00Z","瑞士輪","第 5 輪",3],
+  ["2026-11-03T22:00Z","淘汰賽","八強 1",5],
+  ["2026-11-04T22:00Z","淘汰賽","八強 2",5],
+  ["2026-11-05T22:00Z","淘汰賽","八強 3",5],
+  ["2026-11-06T22:00Z","淘汰賽","八強 4",5],
+  ["2026-11-07T22:00Z","淘汰賽","四強 1",5],
+  ["2026-11-08T22:00Z","淘汰賽","四強 2",5],
+  ["2026-11-14T19:00Z","淘汰賽","總決賽",5]
+];
+// END GENERATED
+// [utc, phase, stage, bestOf, home, away, homeScore, awayScore]
+const M=RAW.map(([utc,phase,stage,bo,h,a,hs,as])=>({t:Date.parse(utc),phase,stage,bo,h,a,hs,as,fin:hs!=null}));
+
+const ZONES=[["Asia/Hong_Kong","香港 / 台北 (UTC+8)"],["Asia/Seoul","首爾 (UTC+9)"],["Europe/London","倫敦 (英國)"],["Europe/Paris","巴黎"],["America/Los_Angeles","洛杉磯"],["UTC","UTC"],["local","我的裝置時區"]];
+const PHASES=["全部","入圍賽","瑞士輪","淘汰賽"];
+let zone="Asia/Hong_Kong",phase="全部";
+const tz=()=>zone==="local"?undefined:zone;
+const fmt=(o)=>new Intl.DateTimeFormat("zh-HK",{timeZone:tz(),...o});
+const $=id=>document.getElementById(id);
+const DUR=m=>m.bo*50*60e3;
+
+function team(c,win){
+  if(!c)return '<span class="tm tbd">待定</span>';
+  return `<span class="tm${win?" w":""}" title="${TEAMS[c]||c}">${c}</span>`;
+}
+function row(m,now){
+  const live=!m.fin&&now>=m.t&&now<m.t+DUR(m);
+  const tag=m.fin?'<span class="tag fin">已完賽</span>':live?'<span class="tag live">進行中</span>':`<span class="tag">BO${m.bo}</span>`;
+  const sc=m.fin?`<span class="sc">${m.hs} : ${m.as}</span>`:'<span class="st">vs</span>';
+  return `<div class="m"><div><div class="t">${fmt({hour:"2-digit",minute:"2-digit",hour12:false}).format(m.t)}</div></div>
+  <div><div class="vs">${team(m.h,m.fin&&m.hs>m.as)}${sc}${team(m.a,m.fin&&m.as>m.hs)}</div><div class="st">${m.phase} · ${m.stage}</div></div>${tag}</div>`;
+}
+function render(){
+  const now=Date.now();
+  const rows=M.filter(m=>phase==="全部"||m.phase===phase);
+  let html="",last="";
+  for(const m of rows){
+    const d=fmt({month:"long",day:"numeric",weekday:"short"}).format(m.t);
+    if(d!==last){html+=`<h2>${d}</h2>`;last=d}
+    html+=row(m,now);
+  }
+  $("upd").textContent="最後更新 "+fmt({month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}).format(Date.parse(UPDATED))+"。";
+  $("list").innerHTML=html;
+  $("bar").innerHTML=PHASES.map(p=>`<button aria-pressed="${p===phase}" data-p="${p}">${p}</button>`).join("")+
+    `<select id="zone" aria-label="時區">${ZONES.map(([v,l])=>`<option value="${v}"${v===zone?" selected":""}>${l}</option>`).join("")}</select>`;
+  $("bar").querySelectorAll("button").forEach(b=>b.onclick=()=>{phase=b.dataset.p;render()});
+  $("zone").onchange=e=>{zone=e.target.value;render()};
+  tick();
+}
+function tick(){
+  const now=Date.now();
+  const nx=M.find(m=>!m.fin&&now<m.t+DUR(m));
+  if(!nx){$("next").innerHTML="<b>賽事已完結</b>";return}
+  const vs=nx.h?`${nx.h} vs ${nx.a}`:"對手待定";
+  const left=nx.t-now;
+  let cd="進行中";
+  if(left>0){const s=Math.floor(left/1e3),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),mi=Math.floor(s%3600/60),se=s%60;
+    cd=`${d?d+" 日 ":""}${String(h).padStart(2,"0")}:${String(mi).padStart(2,"0")}:${String(se).padStart(2,"0")}`}
+  $("next").innerHTML=`<div><div class="st">下一場 · ${nx.phase} ${nx.stage}</div><b>${vs}</b> <span class="st">${fmt({month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}).format(nx.t)}</span></div><div class="cd">${cd}</div>`;
+}
+render();
+setInterval(tick,1000);
+</script>
+</body>
+</html>
