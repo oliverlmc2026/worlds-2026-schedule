@@ -41,7 +41,7 @@ a{color:var(--acc)}
 <body>
 <main>
 <h1>2026 <span>英雄聯盟世界賽</span>賽程</h1>
-<p class="sub">入圍賽已完賽，正賽即將開打。所有時間可按右上時區切換，預設香港時間。</p>
+<p class="sub">入圍賽已完賽，正賽即將開打。所有時間可按右上時區切換，預設倫敦（英國）時間。</p>
 <div class="next" id="next"></div>
 <div class="bar" id="bar"></div>
 <div id="list"></div>
@@ -106,7 +106,7 @@ const M=RAW.map(([utc,phase,stage,bo,h,a,hs,as])=>({t:Date.parse(utc),phase,stag
 
 const ZONES=[["Asia/Hong_Kong","香港 / 台北 (UTC+8)"],["Asia/Seoul","首爾 (UTC+9)"],["Europe/London","倫敦 (英國)"],["Europe/Paris","巴黎"],["America/Los_Angeles","洛杉磯"],["UTC","UTC"],["local","我的裝置時區"]];
 const PHASES=["全部","入圍賽","瑞士輪","淘汰賽"];
-let zone="Asia/Hong_Kong",phase="全部";
+let zone="Europe/London",phase="全部";
 const tz=()=>zone==="local"?undefined:zone;
 const fmt=(o)=>new Intl.DateTimeFormat("zh-HK",{timeZone:tz(),...o});
 const $=id=>document.getElementById(id);
